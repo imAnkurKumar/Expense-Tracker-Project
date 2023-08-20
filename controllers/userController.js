@@ -1,5 +1,6 @@
 const path = require("path");
 const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
 
 exports.getSignUpPage = (req, res, next) => {
   res.sendFile(path.join(__dirname, "../", "public", "views", "signUp.html"));
@@ -18,10 +19,13 @@ exports.postUserSignUp = async (req, res, next) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    
     const newUser = await User.create({
       name: name,
       email: email,
-      password: password,
+      password: hashedPassword,
     });
 
     res

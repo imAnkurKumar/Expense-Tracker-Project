@@ -1,5 +1,6 @@
-const path = require("path")
+const path = require("path");
 const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
 
 exports.getLoginPage = (req, res, next) => {
   res.sendFile(path.join(__dirname, "../", "public", "views", "login.html"));
@@ -16,7 +17,8 @@ exports.postUserLogin = async (req, res, next) => {
       return res.status(401).json({ message: "User not found" });
     }
 
-    if (user.password !== password) {
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid password" });
     }
 
