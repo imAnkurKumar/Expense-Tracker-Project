@@ -1,8 +1,8 @@
 const path = require("path");
 const User = require("../models/userModel");
 
-exports.getLoginPage = (req, res, next) => {
-  res.sendFile(path.join(__dirname, "../", "public", "views", "login.html"));
+exports.getSignUpPage = (req, res, next) => {
+  res.sendFile(path.join(__dirname, "../", "public", "views", "signUp.html"));
 };
 
 exports.postUserSignUp = async (req, res, next) => {

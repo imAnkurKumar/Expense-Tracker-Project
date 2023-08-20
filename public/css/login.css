@@ -1,61 +1,71 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #8d8383;
+ font-family: Arial, sans-serif;
+ margin: 0;
+ padding: 0;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ min-height: 100vh;
+ background-color: #8d8383;
 }
 
 .container {
-  background-color: #fff;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  padding: 20px;
-  border-radius: 5px;
-  max-width: 400px;
-  width: 90%; /* Added to make the container responsive */
+ background-color: #fff;
+ box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+ padding: 20px;
+ border-radius: 5px;
+ max-width: 400px;
+ width: 90%;
 }
 
 .container h1 {
-  text-align: center;
+ text-align: center;
 }
 
 .form-group {
-  margin-bottom: 15px;
+ margin-bottom: 15px;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 5px;
+ display: block;
+ margin-bottom: 5px;
 }
 
 .form-group input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #baafaf;
-  border-radius: 3px;
+ width: 100%;
+ padding: 8px;
+ border: 1px solid #baafaf;
+ border-radius: 3px;
 }
 
 button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  width: 100%;
+ background-color: #007bff;
+ color: #fff;
+ padding: 10px 15px;
+ border: none;
+ border-radius: 3px;
+ cursor: pointer;
+ width: 100%;
+}
+
+.signup-link {
+ margin-top: 10px;
+ text-align: center;
+}
+
+.signup-link a {
+ color: #007bff;
+ text-decoration: none;
 }
 
 @media screen and (max-width: 600px) {
-  .container {
-    max-width: 90%;
-  }
+ .container {
+   max-width: 90%;
+ }
 }
 
 @media screen and (max-width: 400px) {
-  .container {
-    max-width: 95%;
-  }
+ .container {
+   max-width: 95%;
+ }
 }
