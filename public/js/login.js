@@ -16,6 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (response.status === 200) {
           alert("Login successful: " + response.data.message);
         }
+
+        window.location.href = "../views/homePage.html";
+
         document.getElementById("email").value = "";
         document.getElementById("password").value = "";
       } catch (error) {
