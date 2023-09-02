@@ -1,18 +1,24 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const expenseForm = document.getElementById("expense-form");
   const expenseList = document.getElementById("expense-list");
+  let token;
 
-  // Fetch and populate the expense list
   try {
-    const response = await axios.get(
-      "http://localhost:3000/expense/getAllExpenses"
-    );
-    const expenses = response.data;
+    token = localStorage.getItem("token");
+    if (!token) {
+      console.error("Token is missing");
+    } else {
+      const response = await axios.get(
+        "http://localhost:3000/expense/getAllExpenses",
+        { headers: { Authorization: token } }
+      );
+      const expenses = response.data;
 
-    expenses.forEach((expense) => {
-      const expenseItem = createExpenseItem(expense);
-      expenseList.appendChild(expenseItem);
-    });
+      expenses.forEach((expense) => {
+        const expenseItem = createExpenseItem(expense);
+        expenseList.appendChild(expenseItem);
+      });
+    }
   } catch (error) {
     console.error("Error fetching expenses:", error);
   }
@@ -31,24 +37,24 @@ document.addEventListener("DOMContentLoaded", async () => {
           amount,
           description,
           category,
-        }
+        },
+        { headers: { Authorization: token } } // Include the token in headers
       );
 
       if (response.status === 200) {
-        const expenseItem = createExpenseItem({
-          amount,
-          description,
-          category,
-        });
+        const newExpense = { amount, description, category };
+        const expenseItem = createExpenseItem(newExpense);
         expenseList.appendChild(expenseItem);
 
-        clearFormFields();
+        document.getElementById("amount").value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("category").value = "Food";
 
         alert("Expense added successfully");
       }
     } catch (error) {
       console.error("Expense addition error:", error);
-      alert("Error adding expense");
+      // Handle the error, e.g., show an error message to the user.
     }
   });
 
@@ -59,13 +65,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       try {
         await axios.delete(
-          `http://localhost:3000/expense/deleteExpense/${expenseId}`
+          `http://localhost:3000/expense/deleteExpense/${expenseId}`,
+          { headers: { Authorization: token } } // Include the token in headers
         );
         expenseItem.remove();
         alert("Expense deleted successfully");
       } catch (error) {
         console.error("Error deleting expense:", error);
-        alert("Error deleting expense");
+        // Handle the error, e.g., show an error message to the user.
       }
     }
   });
@@ -74,18 +81,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     const expenseItem = document.createElement("li");
     expenseItem.classList.add("expense-item");
     expenseItem.dataset.expenseId = expense.id;
+
     expenseItem.innerHTML = `
       <span class="amount">Rs ${expense.amount}</span>
       <span class="category">${expense.category}</span>
       <p class="description">${expense.description}</p>
       <button class="delete-button">Delete</button>
     `;
-    return expenseItem;
-  }
 
-  function clearFormFields() {
-    document.getElementById("amount").value = "";
-    document.getElementById("description").value = "";
-    document.getElementById("category").value = "Food";
+    return expenseItem;
   }
 });

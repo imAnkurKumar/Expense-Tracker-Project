@@ -8,6 +8,8 @@ const userRouter = require("./router/userRouter");
 const sequelize = require("./util/database");
 const loginRouter = require("./router/loginRouter");
 const expenseRouter = require("./router/expenseRouter");
+const User = require("./models/userModel");
+const Expense = require("./models/expenseModel");
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -22,6 +24,9 @@ app.use("/user/login", loginRouter);
 
 app.use("/", expenseRouter);
 app.use("/expense", expenseRouter);
+
+User.hasMany(Expense);
+Expense.belongsTo(User);
 
 sequelize
   .sync()

@@ -1,32 +1,37 @@
 document.addEventListener("DOMContentLoaded", () => {
-  document
-    .getElementById("login-form")
-    .addEventListener("submit", async (e) => {
-      e.preventDefault();
+  const loginForm = document.getElementById("login-form");
 
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      try {
-        const response = await axios.post("http://localhost:3000/user/login", {
-          email,
-          password,
-        });
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-        if (response.status === 200) {
-          alert("Login successful: " + response.data.message);
-        }
+    try {
+      const response = await axios.post("http://localhost:3000/user/login", {
+        email,
+        password,
+      });
 
+      if (response.status === 200) {
+        alert("Login successful: " + response.data.message);
+
+        // Store the token in localStorage
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+
+        // Redirect to the home page
         window.location.href = "../views/homePage.html";
-
-        document.getElementById("email").value = "";
-        document.getElementById("password").value = "";
-      } catch (error) {
-        if (error.response.status === 401) {
-          alert("Error: " + error.response.data.message);
-        } else {
-          console.error("Login error:", error.response.data.message);
-        }
       }
-    });
+
+      document.getElementById("email").value = "";
+      document.getElementById("password").value = "";
+    } catch (error) {
+      if (error.response.status === 401) {
+        alert("Error: " + error.response.data.message);
+      } else {
+        console.error("Login error:", error.response.data.message);
+      }
+    }
+  });
 });
