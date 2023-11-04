@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (response.status === 200) {
-        alert("Login successful: " + response.data.message);
+        alert("Message: " + response.data.message);
 
         // Store the token in localStorage
         const token = response.data.token;

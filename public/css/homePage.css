@@ -47,12 +47,36 @@ select {
 }
 
 button[type="submit"] {
-  background-color: #007bff;
+  background-color: #000000;
   color: #fff;
   padding: 10px 15px;
   border: none;
   border-radius: 3px;
   cursor: pointer;
+  font-weight: bold;
+}
+button:hover {
+  background-color: #20096c;
+}
+/* Add these styles for the "Buy Premium" button */
+#buy-premium-button {
+  background-color: #000000; /* Change the background color */
+  color: #fff; /* Text color */
+  padding: 10px 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold; /* Make the text bold */
+}
+
+/* Change button color on hover */
+#buy-premium-button:hover {
+  background-color: #20096c; /* Darker color on hover */
+}
+
+/* Optional: Center the button */
+#buy-premium-button {
+  margin: 5px auto;
 }
 
 .right-column {
@@ -74,7 +98,7 @@ ul {
 .expense-item {
   background-color: #f5f5f5;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #7a7878;
   border-radius: 3px;
   margin-bottom: 10px;
 }

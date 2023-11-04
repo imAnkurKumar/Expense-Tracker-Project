@@ -1,13 +1,11 @@
 const path = require("path");
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+
 const jwt = require("jsonwebtoken");
 
 function generateAccessToken(id, email) {
-  return jwt.sign(
-    { userId: id, email: email },
-    "kjhsgdfiuiew889kbasgdfskjabsdfjlabsbdljhsd"
-  );
+  return jwt.sign({ userId: id, email: email }, process.env.TOKEN_SECRET);
 }
 
 exports.getLoginPage = (req, res, next) => {
