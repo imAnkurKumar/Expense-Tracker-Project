@@ -1,11 +1,12 @@
 const path = require("path");
 const Expense = require("../models/expenseModel");
+const User = require("../models/userModel");
 
-exports.getHomePage = (req, res, next) => {
+const getHomePage = (req, res) => {
   res.sendFile(path.join(__dirname, "../", "public", "views", "homePage.html"));
 };
 
-exports.getAllExpenses = async (req, res, next) => {
+const getAllExpenses = async (req, res) => {
   try {
     const expenses = await Expense.findAll({ where: { userId: req.user.id } });
     res.json(expenses);
@@ -15,7 +16,7 @@ exports.getAllExpenses = async (req, res, next) => {
   }
 };
 
-exports.addExpense = async (req, res, next) => {
+const addExpense = async (req, res) => {
   const { amount, description, category } = req.body;
 
   try {
@@ -25,6 +26,15 @@ exports.addExpense = async (req, res, next) => {
       category: category,
       userId: req.user.id, // Include the userId associated with the currently logged-in user
     });
+
+    const totalExpense = Number(req.user.totalExpenses) + Number(amount);
+    console.log(totalExpense);
+    console.log(result);
+
+    const updateUser = await User.update(
+      { totalExpenses: totalExpense },
+      { where: { id: req.user.id } }
+    );
     res.status(200).json({ message: "Expense added successfully" });
   } catch (err) {
     console.error(err);
@@ -32,7 +42,7 @@ exports.addExpense = async (req, res, next) => {
   }
 };
 
-exports.deleteExpense = async (req, res, next) => {
+const deleteExpense = async (req, res) => {
   const expenseId = req.params.id; // Get the expense ID from the request params
 
   try {
@@ -51,3 +61,5 @@ exports.deleteExpense = async (req, res, next) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+module.exports = { getAllExpenses, deleteExpense, addExpense, getHomePage };

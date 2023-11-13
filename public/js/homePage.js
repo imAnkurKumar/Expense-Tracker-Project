@@ -120,27 +120,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     return expenseItem;
   }
 
-  // function showLeaderboard() {
-  //   const inputElement = document.createElement("input");
-  //   inputElement.type = "button";
-  //   inputElement.value = "Show Leaderboard";
-  //   inputElement.addEventListener("click", async () => {
-  //     token = localStorage.getItem("token");
-  //     const userLeaderboardAarray = await axios.get(
-  //       "http://localhost:3000/premium/showLeaderBoard",
-  //       { headers: { Authorization: token } }
-  //     );
-  //     console.log(userLeaderboardAarray);
-
-  //     var leaderboardElement = document.getElementById("leaderboard");
-  //     leaderboardElement.innerHTML += `<h1>Leader Board</h1>`;
-  //     userLeaderboardAarray.data.forEach((userDetails) => {
-  //       leaderboardElement.innerHTML += `<li>Name - ${userDetails.name} - Total Expense - ${userDetails.total_cost}</li>`;
-  //     });
-  //   });
-  //   document.getElementById("message").appendChild(inputElement);
-  // }
-
   function showLeaderboard() {
     const showLeaderboardButton = document.createElement("button");
     showLeaderboardButton.textContent = "Show Leaderboard";

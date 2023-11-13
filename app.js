@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use("/", userRouter);
 app.use("/user", userRouter);
 
-app.use("/user/login", loginRouter);
+app.use("/user", loginRouter);
 
 app.use("/", expenseRouter);
 app.use("/expense", expenseRouter);
@@ -35,7 +35,7 @@ app.use("/purchase", purchaseRouter);
 app.use("/premium", premiumFeatureRoute);
 
 User.hasMany(Expense);
-Expense.belongsTo(User); 
+Expense.belongsTo(User);
 
 User.hasMany(Order);
 Order.belongsTo(User);
