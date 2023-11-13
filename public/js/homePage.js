@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     token = localStorage.getItem("token");
     const decodedToken = parseJwt(token);
-    console.log(decodedToken);
+    // console.log(decodedToken);
     const isPremiumUser = decodedToken.isPremiumUser;
     if (isPremiumUser) {
       showPremiumuserMember();

@@ -21,7 +21,7 @@ const postUserLogin = async (req, res, next) => {
 
   try {
     const user = await User.findOne({ where: { email } });
-    console.log("This is user", user);
+    // console.log("This is user", user);
 
     if (!user) {
       return res.status(401).json({ message: "User not found" });

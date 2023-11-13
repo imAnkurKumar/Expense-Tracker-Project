@@ -35,7 +35,7 @@ app.use("/purchase", purchaseRouter);
 app.use("/premium", premiumFeatureRoute);
 
 User.hasMany(Expense);
-Expense.belongsTo(User);
+Expense.belongsTo(User); 
 
 User.hasMany(Order);
 Order.belongsTo(User);
