@@ -92,8 +92,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       const expenseId = expenseItem.dataset.expenseId;
 
       try {
-      
-        await axios.delete(
+        
+      await axios.delete(
           `http://localhost:3000/expense/deleteExpense/${expenseId}`,
           { headers: { Authorization: token } } // Include the token in headers
         );
