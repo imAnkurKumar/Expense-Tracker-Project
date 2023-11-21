@@ -1,22 +1,32 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const resetPassword = document.getElementById("reset-password-form");
+document.addEventListener("DOMContentLoaded", async () => {
+  const resetPasswordForm = document.getElementById("reset-password-form");
 
-  resetPassword.addEventListener("submit", async (e) => {
+  resetPasswordForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("email").value;
-
     try {
-      const response = await axios.post(
-        "http://localhost:3000/password/forgotpassword",
+      const email = document.getElementById("email").value;
+      const newPassword = document.getElementById("new-password").value;
+
+      const confirmPassword = document.getElementById("confirm-password").value;
+
+      if (newPassword !== confirmPassword) {
+        document.getElementById("new-password").value = "";
+        document.getElementById("confirm-password").value = "";
+
+        alert("New password and confirm password do not match");
+        return;
+      }
+      const res = await axios.post(
+        "http://localhost:3000/password/resetPassword",
         {
-          email: email,
+          password: newPassword,
         }
       );
-      if (response.status === 201) {
-        alert("Message: " + response.data.message);
-      }
+
+      alert(res.data.message);
+      window.location.href = "../views/login.html";
     } catch (err) {
-      alert("Error: " + err.message);
+      console.log(err);
     }
   });
 });

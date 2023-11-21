@@ -12,11 +12,12 @@ const loginRouter = require("./router/loginRouter");
 const expenseRouter = require("./router/expenseRouter");
 const purchaseRouter = require("./router/purchaseMembershipRouter");
 const premiumFeatureRoute = require("./router/premiumfeaturesRouter");
-const forgotPasswordRouter = require("./router/resetPassword");
+const resetPasswordRouter = require("./router/resetPassword");
 
 const User = require("./models/userModel");
 const Expense = require("./models/expenseModel");
 const Order = require("./models/ordersModel");
+const ResetPassword = require("./models/resetPassword");
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -35,13 +36,16 @@ app.use("/expense", expenseRouter);
 app.use("/purchase", purchaseRouter);
 app.use("/premium", premiumFeatureRoute);
 
-app.use("/password", forgotPasswordRouter);
+app.use("/password", resetPasswordRouter);
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
 
 User.hasMany(Order);
 Order.belongsTo(User);
+
+User.hasMany(ResetPassword);
+ResetPassword.belongsTo(User);
 
 sequelize
   .sync()
