@@ -15,7 +15,7 @@ const premiumFeatureRoute = require("./router/premiumfeaturesRouter");
 const resetPasswordRouter = require("./router/resetPassword");
 
 const User = require("./models/userModel");
-const Expense = require("./models/expenseModel");
+const Expense = require("./models/expenseModel"); 
 const Order = require("./models/ordersModel");
 const ResetPassword = require("./models/resetPassword");
 

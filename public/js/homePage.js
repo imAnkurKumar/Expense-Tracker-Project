@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const expenseForm = document.getElementById("expense-form");
   const expenseList = document.getElementById("expense-list");
   const buyPremiumButton = document.getElementById("buy-premium-button");
+  const downloadExpense = document.getElementById("download-expense");
   let token;
 
   function parseJwt(token) {
@@ -16,10 +17,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         })
         .join("")
     );
-
     return JSON.parse(jsonPayload);
   }
-
   function showPremiumuserMember() {
     buyPremiumButton.style.visibility = "hidden";
     document.getElementById("message").innerHTML = "You are premium user";
@@ -92,8 +91,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const expenseId = expenseItem.dataset.expenseId;
 
       try {
-        
-      await axios.delete(
+        await axios.delete(
           `http://localhost:3000/expense/deleteExpense/${expenseId}`,
           { headers: { Authorization: token } } // Include the token in headers
         );
@@ -125,12 +123,33 @@ document.addEventListener("DOMContentLoaded", async () => {
     const showLeaderboardButton = document.createElement("button");
     showLeaderboardButton.textContent = "Show Leaderboard";
     showLeaderboardButton.classList.add("show-leaderboard-button");
-
     showLeaderboardButton.addEventListener("click", () => {
       window.open("leaderboard.html", "_blank");
     });
     document.getElementById("message").appendChild(showLeaderboardButton);
   }
+
+  downloadExpense.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+      token = localStorage.getItem("token");
+      const response = await axios.get(
+        "http://localhost:3000/expense/downloadExpense",
+        { headers: { Authorization: token } }
+      );
+
+      if (response.status === 201) {
+        let a = document.createElement("a");
+        a.href = response.data.fileUrl;
+        a.download = "myexpense.csv";
+        a.click();
+      } else {
+        throw new Error(response.data.message);
+      }
+    } catch (err) {
+      alert(err.message);
+    }
+  });
 
   buyPremiumButton.addEventListener("click", async (e) => {
     e.preventDefault();

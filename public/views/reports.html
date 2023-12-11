@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reports</title>
+    <link rel="stylesheet" href="../css/reportsPage.css" />
+  </head>
+
+  <body>
+    <!-- Daily Table -->
+    <div class="container" id="dailyTable">
+      <!-- Daily table Form -->
+      <div class="report-section">
+        <h3>DAILY REPORTS</h3>
+        <form>
+          <label for="date"> Select Date</label>
+          <input type="date" id="date" />
+          <button type="submit">Show</button>
+        </form>
+      </div>
+
+      <!-- Daily table -->
+      <div class="report-section">
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>Total</td>
+              <td id="dailyTotalAmount">9000</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- Monthly Table -->
+    <div class="container" id="monthlyTable">
+      <!-- Daily table Form -->
+      <div class="report-section">
+        <h3>MONTHLY REPORTS</h3>
+        <form>
+          <label for="month"> Select Month</label>
+          <input type="month" id="month" />
+          <button type="submit">Show</button>
+        </form>
+      </div>
+
+      <!-- Monthly table -->
+      <div class="report-section">
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>Total</td>
+              <td id="monthlyTotalAmount">9000</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- Yearly Table -->
+    <div class="container" id="yearlyTable">
+      <!-- Daily table Form -->
+      <div class="report-section">
+        <h3>YEARLY REPORTS</h3>
+        <form>
+          <label for="year-input" class="form-label">Select Year</label>
+          <input
+            type="number"
+            id="year-input"
+            name="year-input"
+            min="1900"
+            max="2100"
+            step="1"
+          />
+
+          <button type="submit">Show</button>
+        </form>
+      </div>
+
+      <!-- Yearly table -->
+      <div class="report-section">
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th scope="col">Month</th>
+              <td></td>
+              <th scope="col" style="width: 20%">Amount</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyId">
+            <tr class="trStyle">
+              <td>January</td>
+              <td></td>
+              <td>9000</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="trStyle">
+              <td></td>
+              <td id="yearlyTotal">Total</td>
+              <td id="yearlyTotalAmount">9000</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/reportsPage.js"></script>
+  </body>
+</html>
