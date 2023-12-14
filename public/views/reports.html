@@ -3,11 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Reports</title>
+    <title>Financial Reports Dashboard</title>
     <link rel="stylesheet" href="../css/reportsPage.css" />
   </head>
 
   <body>
+    <header>
+      <h1>Explore Your Financial Reports</h1>
+    </header>
     <!-- Daily Table -->
     <div class="container" id="dailyTable">
       <!-- Daily table Form -->
@@ -15,8 +18,8 @@
         <h3>DAILY REPORTS</h3>
         <form>
           <label for="date"> Select Date</label>
-          <input type="date" id="date" />
-          <button type="submit">Show</button>
+          <input type="date" id="date" required />
+          <button type="submit" id="showDailyReport">Show</button>
         </form>
       </div>
 
@@ -31,21 +34,10 @@
               <th>Amount</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td></td>
-              <td></td>
-              <td>Total</td>
-              <td id="dailyTotalAmount">9000</td>
-            </tr>
+          <!-- daily table body -->
+          <tbody id="tbodyDailyId"></tbody>
+          <tfoot id="tfootDailyId">
+            <tr></tr>
           </tfoot>
         </table>
       </div>
@@ -58,8 +50,8 @@
         <h3>MONTHLY REPORTS</h3>
         <form>
           <label for="month"> Select Month</label>
-          <input type="month" id="month" />
-          <button type="submit">Show</button>
+          <input type="month" id="month" required />
+          <button type="submit" id="showMonthlyReport">Show</button>
         </form>
       </div>
 
@@ -74,21 +66,9 @@
               <th>Amount</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td></td>
-              <td></td>
-              <td>Total</td>
-              <td id="monthlyTotalAmount">9000</td>
-            </tr>
+          <tbody id="tbodyMonthlyId"></tbody>
+          <tfoot id="tfootMonthlyId">
+            <tr></tr>
           </tfoot>
         </table>
       </div>
@@ -108,9 +88,10 @@
             min="1900"
             max="2100"
             step="1"
+            required
           />
 
-          <button type="submit">Show</button>
+          <button type="submit" id="showYearlyReport">Show</button>
         </form>
       </div>
 
@@ -120,29 +101,19 @@
           <thead>
             <tr>
               <th scope="col">Month</th>
-              <td></td>
-              <th scope="col" style="width: 20%">Amount</th>
+              <th scope="col">Amount</th>
             </tr>
           </thead>
-          <tbody id="tbodyId">
-            <tr class="trStyle">
-              <td>January</td>
-              <td></td>
-              <td>9000</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr class="trStyle">
-              <td></td>
-              <td id="yearlyTotal">Total</td>
-              <td id="yearlyTotalAmount">9000</td>
-            </tr>
+          <tbody id="tbodyId"></tbody>
+          <tfoot id="tfootYearlyId">
+            <tr></tr>
           </tfoot>
         </table>
       </div>
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
     <script src="../js/reportsPage.js"></script>
   </body>
 </html>

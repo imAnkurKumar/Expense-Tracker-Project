@@ -2,16 +2,53 @@ const path = require("path");
 const Expense = require("../models/expenseModel");
 const User = require("../models/userModel");
 const sequelize = require("../util/database");
+const S3services = require("../services/S3services");
+const Download = require("../models/downloadModel");
 
 const getHomePage = (req, res) => {
   res.sendFile(path.join(__dirname, "../", "public", "views", "homePage.html"));
 };
 
+const downloadExpense = async (req, res) => {
+  try {
+    const expenses = await Expense.findAll({ where: { userId: req.user.id } });
+    console.log("expenses", expenses);
+    const stringifiedExpenses = JSON.stringify(expenses);
+
+    const userId = req.user.id;
+    const filename = `Expense${userId}/${new Date()}.txt`;
+    const fileURL = await S3services.uploadToS3(stringifiedExpenses, filename);
+
+    const result = await Download.create({
+      userId: req.user.id,
+      fileURL: fileURL,
+      downloadDate: new Date(),
+    });
+    res.status(200).json({ fileURL, success: true });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ fileURL: "", success: false, err: err });
+  }
+};
+const downloadDate = async (req, res) => {
+  try {
+    const downloadHistory = await Download.findAll({
+      where: { userId: req.user.id },
+      attributes: ["fileURL", "downloadDate"],
+    });
+    res.status(200).json(downloadHistory);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Error in fetching data" });
+  }
+};
 const getAllExpenses = async (req, res) => {
   try {
     const expenses = await Expense.findAll({ where: { userId: req.user.id } });
+    // console.log(expenses);
     res.json(expenses);
   } catch (err) {
+    ro;
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
@@ -85,4 +122,11 @@ const deleteExpense = async (req, res) => {
   }
 };
 
-module.exports = { getAllExpenses, deleteExpense, addExpense, getHomePage };
+module.exports = {
+  getAllExpenses,
+  deleteExpense,
+  addExpense,
+  getHomePage,
+  downloadExpense,
+  downloadDate,
+};

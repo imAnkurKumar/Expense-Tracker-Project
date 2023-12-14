@@ -9,6 +9,7 @@ const authenticate = (req, res, next) => {
 
     User.findByPk(user.userId).then((user) => {
       req.user = user;
+      console.log("This is req.user", user);
       next();
     });
   } catch (err) {

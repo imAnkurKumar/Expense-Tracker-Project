@@ -13,9 +13,10 @@ const expenseRouter = require("./router/expenseRouter");
 const purchaseRouter = require("./router/purchaseMembershipRouter");
 const premiumFeatureRoute = require("./router/premiumfeaturesRouter");
 const resetPasswordRouter = require("./router/resetPassword");
+const reportsRouter = require("./router/reportsRouter");
 
 const User = require("./models/userModel");
-const Expense = require("./models/expenseModel"); 
+const Expense = require("./models/expenseModel");
 const Order = require("./models/ordersModel");
 const ResetPassword = require("./models/resetPassword");
 
@@ -37,6 +38,8 @@ app.use("/purchase", purchaseRouter);
 app.use("/premium", premiumFeatureRoute);
 
 app.use("/password", resetPasswordRouter);
+
+app.use("/reports", reportsRouter);
 
 User.hasMany(Expense);
 Expense.belongsTo(User);

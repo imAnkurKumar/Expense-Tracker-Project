@@ -2,14 +2,21 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #f5f5f5;
 }
-
+header {
+  background-color: #1a1a1a;
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+}
 .container {
   max-width: 800px;
   margin: 20px auto;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  background-color: #908c8c;
 }
 
 .report-section {
@@ -31,7 +38,7 @@ form {
 
 th,
 td {
-  border: 1px solid #ddd;
+  border: 1px solid #060606;
   padding: 8px;
   text-align: left;
 }
@@ -41,7 +48,7 @@ tfoot {
 }
 
 /* Responsive Styling */
-@media (max-width: 600px) {
+ @media (max-width: 600px) { */
   .container {
     max-width: 100%;
   }
