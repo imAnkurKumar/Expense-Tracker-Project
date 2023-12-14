@@ -183,9 +183,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
         const downloadHistory = response.data;
         downloadList.innerHTML = "";
-        downloadHistory.forEach((download) => {
+        downloadHistory.forEach((download, index) => {
           const listItem = document.createElement("li");
-          listItem.innerHTML = `<a href="${download.fileURL}" target="_blank">${download.downloadDate}</a>`;
+          listItem.innerHTML = `<span>${index + 1}.</span><a href="${
+            download.fileURL
+          }" target="_blank">${download.downloadDate}</a>`;
           downloadList.appendChild(listItem);
         });
       } catch (err) {

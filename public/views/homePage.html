@@ -7,9 +7,13 @@
     <link rel="stylesheet" href="../css/homePage.css" />
   </head>
   <body>
+    <header>
+      <h1>Expense Tracker</h1>
+      <p>Track Your Expenses</p>
+    </header>
     <div class="container">
-      <div class="left-column">
-        <h1>Expense Tracker</h1>
+      <div class="expense-form-container">
+        <h2>Expense Form</h2>
         <form id="expense-form">
           <div class="form-group">
             <label for="amount">Amount:</label>
@@ -35,11 +39,11 @@
         <div id="message"></div>
         <button id="buy-premium-button">Buy Premium</button>
       </div>
-      <div class="right-column">
+      <div class="expense-list-container">
         <h2>Expense List</h2>
         <ul id="expense-list"></ul>
       </div>
-      <div id="download-history">
+      <div id="download-history-container">
         <h2>Download History</h2>
         <ul id="download-list"></ul>
       </div>

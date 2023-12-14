@@ -10,80 +10,91 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f5f5f5;
+  font-size: 16px;
+  color: #333;
 }
-
+header {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  padding: 20px;
+  text-align: center;
+}
 .container {
   display: flex;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
   padding: 20px;
   gap: 10px; /* Add spacing between columns */
   flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
 }
-.left-column {
-  flex: 0 0 400px; /*Set fixed width for the left column */
+
+.expense-form-container {
+  flex: 0 0 400px;
   padding: 20px;
   background-color: #908c8c;
   box-shadow: 0 0 5px rgba(3, 3, 3, 0.3);
   border-radius: 5px;
-  max-height: 450px;
-  max-width:35%;
+  max-height: fit-content;
+  max-width: 35%;
 }
 
-.left-column h1 {
+.expense-form-container {
   margin-bottom: 20px;
   color: #060404;
 }
 
 .form-group {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 /* Form styling */
-input[type="number"],
-input[type="text"],
-select {
-  width: 90%;
-  padding: 8px;
+.expense-form-container input,
+.expense-form-container select,
+.expense-form-container button {
+  width: 100%;
+  padding: 10px;
   border: 2px solid #000000;
   border-radius: 3px;
+  margin-bottom: 10px;
 }
 
-button[type="submit"] {
+.expense-form-container button {
   background-color: #ede8e8;
   color: #080303;
+  font-weight: bold;
+}
+
+.expense-form-container button:hover {
+  background-color: #080181;
+}
+/* Add these styles for the "Buy Premium" button */
+#buy-premium-button,
+.show-leaderboard-button,
+.show-report-button,
+.download-button,
+.show-download-button {
+  background-color: #e7e7e7;
+  color: #000000;
   padding: 10px 15px;
   border: none;
   border-radius: 3px;
   cursor: pointer;
   font-weight: bold;
-}
-button:hover {
-  background-color: #080181;
-}
-/* Add these styles for the "Buy Premium" button */
-#buy-premium-button {
-  background-color: #e7e7e7; /* Change the background color */
-  color: #000000; /* Text color */
-  padding: 10px 15px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  font-weight: bold; /* Make the text bold */
+  margin: 5px;
 }
 
 /* Change button color on hover */
-#buy-premium-button:hover {
-  background-color: #20096c; /* Darker color on hover */
+#buy-premium-button:hover,
+.show-leaderboard-button:hover,
+.show-report-button:hover,
+.download-button:hover,
+.show-download-button:hover {
+  background-color: #20096c;
 }
 
-/* Optional: Center the button */
-#buy-premium-button {
-  margin: 5px auto;
-}
-
-.right-column {
+.expense-list-container,
+#download-history-container {
   flex: 1; /* Make the right column expand to fill available space */
-  max-height: 450px; /* Set a maximum height for the right column */
+  max-height: fit-content; /* Set a maximum height for the right column */
   overflow-y: auto; /* Add vertical scrollbar when content exceeds max-height */
   padding: 20px;
   background-color: #fff;
@@ -105,14 +116,24 @@ ul {
   border-radius: 3px;
   margin-bottom: 10px;
 }
+#message {
+  margin-top: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: #ef0404;
+}
 
+#message.error {
+  color: #e74c3c;
+}
 @media screen and (max-width: 800px) {
   .container {
     flex-direction: column;
   }
 
-  .left-column,
-  .right-column {
+  .expense-form-container,
+  .expense-list-container,
+  #download-history-container {
     width: 100%;
     margin-bottom: 20px;
   }
