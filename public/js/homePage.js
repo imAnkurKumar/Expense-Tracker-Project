@@ -22,9 +22,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     return JSON.parse(jsonPayload);
   }
 
+  // Function to create buttons
+  function createStyledButton(text, className, clickHandler) {
+    const button = document.createElement("button");
+    button.textContent = text;
+    button.classList.add(className);
+    button.addEventListener("click", clickHandler);
+    return button;
+  }
+
   function showPremiumuserMember() {
     buyPremiumButton.style.visibility = "hidden";
-    document.getElementById("message").innerHTML = "You are premium user";
+    document.getElementById("message").innerHTML = "PREMIUM USER";
     showLeaderboard();
     showReport();
     downloadExpense();
@@ -126,74 +135,79 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function showLeaderboard() {
-    const showLeaderboardButton = document.createElement("button");
-    showLeaderboardButton.textContent = "Show Leaderboard";
-    showLeaderboardButton.classList.add("show-leaderboard-button");
-    showLeaderboardButton.addEventListener("click", () => {
-      window.open("leaderboard.html", "_blank");
-    });
+    const showLeaderboardButton = createStyledButton(
+      "Show Leaderboard",
+      "show-leaderboard-button",
+      () => {
+        window.open("leaderboard.html", "_blank");
+      }
+    );
     messageDiv.appendChild(showLeaderboardButton);
   }
 
   function showReport() {
-    const showReportButton = document.createElement("button");
-    showReportButton.textContent = "View Report";
-    showReportButton.classList.add("show-report-button");
-    showReportButton.addEventListener("click", () => {
-      window.open("reports.html", "_blank");
-    });
+    const showReportButton = createStyledButton(
+      "View Report",
+      "show-report-button",
+      () => {
+        window.open("reports.html", "_blank");
+      }
+    );
     messageDiv.appendChild(showReportButton);
   }
+
   function downloadExpense() {
-    const showDownloadButton = document.createElement("button");
-    showDownloadButton.textContent = "Download Expense";
-    showDownloadButton.classList.add("download-button");
-    showDownloadButton.addEventListener("click", async () => {
-      try {
-        token = localStorage.getItem("token");
-        const response = await axios.get(
-          "http://localhost:3000/expense/downloadExpense",
-          { headers: { Authorization: token } }
-        );
-        if (response.status === 200) {
-          const a = document.createElement("a");
-          a.href = response.data.fileURL;
-          a.download = "myexpense.csv";
-          a.click();
-        } else {
-          throw new Error(response.data.message);
+    const showDownloadButton = createStyledButton(
+      "Download Expense",
+      "download-button",
+      async () => {
+        try {
+          token = localStorage.getItem("token");
+          const response = await axios.get(
+            "http://localhost:3000/expense/downloadExpense",
+            { headers: { Authorization: token } }
+          );
+          if (response.status === 200) {
+            const a = document.createElement("a");
+            a.href = response.data.fileURL;
+            a.download = "myexpense.csv";
+            a.click();
+          } else {
+            throw new Error(response.data.message);
+          }
+        } catch (err) {
+          console.error("error downloading Expense:", err);
         }
-      } catch (err) {
-        console.error("error downloading Expense:", err);
       }
-    });
+    );
     messageDiv.appendChild(showDownloadButton);
   }
 
   function fetchDownloadHistory() {
-    const showDownloadHistoryButton = document.createElement("button");
-    showDownloadHistoryButton.textContent = "Download History";
-    showDownloadHistoryButton.classList.add("show-download-button");
-    showDownloadHistoryButton.addEventListener("click", async () => {
-      try {
-        token = localStorage.getItem("token");
-        const response = await axios.get(
-          "http://localhost:3000/expense/downloadHistory",
-          { headers: { Authorization: token } }
-        );
-        const downloadHistory = response.data;
-        downloadList.innerHTML = "";
-        downloadHistory.forEach((download, index) => {
-          const listItem = document.createElement("li");
-          listItem.innerHTML = `<span>${index + 1}.</span><a href="${
-            download.fileURL
-          }" target="_blank">${download.downloadDate}</a>`;
-          downloadList.appendChild(listItem);
-        });
-      } catch (err) {
-        console.log(err);
+    const showDownloadHistoryButton = createStyledButton(
+      "Download History",
+      "show-download-button",
+      async () => {
+        try {
+          token = localStorage.getItem("token");
+          const response = await axios.get(
+            "http://localhost:3000/expense/downloadHistory",
+            { headers: { Authorization: token } }
+          );
+          const downloadHistory = response.data;
+          downloadList.innerHTML = "";
+          downloadHistory.forEach((download, index) => {
+            const listItem = document.createElement("li");
+            listItem.innerHTML = `<span>${index + 1}.</span><a href="${
+              download.fileURL
+            }" target="_blank">${download.downloadDate}</a>`;
+            downloadList.appendChild(listItem);
+          });
+        } catch (err) {
+          console.log(err);
+        }
       }
-    });
+    );
     messageDiv.appendChild(showDownloadHistoryButton);
   }
 
@@ -219,7 +233,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
         alert("You are a Premium User Now");
         buyPremiumButton.style.visibility = "hidden";
-        document.getElementById("message").innerHTML = "You are premium user";
+        document.getElementById("message").innerHTML = "PREMIUM USER";
         localStorage.setItem("token", res.data.token);
         showLeaderboard();
         showReport();

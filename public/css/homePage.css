@@ -92,7 +92,7 @@ header {
 }
 
 .expense-list-container,
-#download-history-container {
+.download-history-container {
   flex: 1; /* Make the right column expand to fill available space */
   max-height: fit-content; /* Set a maximum height for the right column */
   overflow-y: auto; /* Add vertical scrollbar when content exceeds max-height */
@@ -133,7 +133,7 @@ ul {
 
   .expense-form-container,
   .expense-list-container,
-  #download-history-container {
+  .download-history-container {
     width: 100%;
     margin-bottom: 20px;
   }
