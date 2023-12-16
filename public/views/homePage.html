@@ -42,12 +42,18 @@
       <div class="expense-list-container">
         <h2>Expense List</h2>
         <ul id="expense-list"></ul>
+        <div class="pagination-container">
+          <button id="prevPageBtn">Previous Page</button>
+          <span id="currentPage">Page 1</span>
+          <button id="nextPageBtn">Next Page</button>
+        </div>
       </div>
       <div id="download-history-container" class="download-history-container">
         <h2>Download History</h2>
         <ul id="download-list"></ul>
       </div>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
     <script src="../js/homePage.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>

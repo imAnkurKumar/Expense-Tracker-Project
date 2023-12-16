@@ -44,11 +44,24 @@ const downloadDate = async (req, res) => {
 };
 const getAllExpenses = async (req, res) => {
   try {
-    const expenses = await Expense.findAll({ where: { userId: req.user.id } });
-    // console.log(expenses);
-    res.json(expenses);
+    const page = req.query.page || 1;
+    const limit = 5;
+    const offset = (page - 1) * limit;
+
+    const totalExpenses = await Expense.count({
+      where: { userId: req.user.id },
+    });
+    console.log("totalExpenses..", totalExpenses);
+
+    const expenses = await Expense.findAll({
+      where: { userId: req.user.id },
+      offset: offset,
+      limit: limit,
+    });
+    
+    console.log(expenses);
+    res.json({ expenses, totalExpenses });
   } catch (err) {
-    ro;
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }

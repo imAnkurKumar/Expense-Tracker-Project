@@ -4,8 +4,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const buyPremiumButton = document.getElementById("buy-premium-button");
   const messageDiv = document.getElementById("message");
   const downloadList = document.getElementById("download-list");
+  const prevPageBtn = document.getElementById("prevPageBtn");
+  const nextPageBtn = document.getElementById("nextPageBtn");
+  const currentPageDisplay = document.getElementById("currentPage");
 
   let token;
+  let currentPage = 1;
+  let totalPages;
 
   function parseJwt(token) {
     var base64Url = token.split(".")[1];
@@ -39,6 +44,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     downloadExpense();
     fetchDownloadHistory();
   }
+
+  const fetchExpenses = async (page) => {
+    token = localStorage.getItem("token");
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/expense/getAllExpenses?page=${page}`,
+        { headers: { Authorization: token } }
+      );
+      const { expenses, totalExpenses } = response.data;
+
+      expenseList.innerHTML = "";
+      expenses.forEach((expense) => {
+        const expenseItem = createExpenseItem(expense);
+        expenseList.appendChild(expenseItem);
+      });
+
+      totalPages = Math.ceil(totalExpenses / 5);
+      currentPageDisplay.innerHTML = `Page ${page} of ${totalPages}`;
+      prevPageBtn.disabled = page === 1;
+      nextPageBtn.disabled = page === totalPages;
+    } catch (error) {
+      console.error("Error fetching expenses:", error);
+    }
+  };
+
   try {
     token = localStorage.getItem("token");
     const decodedToken = parseJwt(token);
@@ -50,20 +80,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!token) {
       console.error("Token is missing");
     } else {
-      const response = await axios.get(
-        "http://localhost:3000/expense/getAllExpenses",
-        { headers: { Authorization: token } }
-      );
-      const expenses = response.data;
-
-      expenses.forEach((expense) => {
-        const expenseItem = createExpenseItem(expense);
-        expenseList.appendChild(expenseItem);
-      });
+      await fetchExpenses(currentPage);
     }
   } catch (error) {
     console.error("Error fetching expenses:", error);
   }
+
+  prevPageBtn.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      fetchExpenses(currentPage);
+    }
+  });
+
+  nextPageBtn.addEventListener("click", () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      fetchExpenses(currentPage);
+    }
+  });
 
   expenseForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -86,7 +121,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (response.status === 200) {
         const newExpense = { amount, description, category };
         const expenseItem = createExpenseItem(newExpense);
-        expenseList.appendChild(expenseItem);
+        fetchExpenses(currentPage);
 
         document.getElementById("amount").value = "";
         document.getElementById("description").value = "";
