@@ -42,10 +42,11 @@ const downloadDate = async (req, res) => {
     res.status(500).json({ message: "Error in fetching data" });
   }
 };
+
 const getAllExpenses = async (req, res) => {
   try {
     const page = req.query.page || 1;
-    const limit = 5;
+    const limit = parseInt(req.query.perPage) || 5;
     const offset = (page - 1) * limit;
 
     const totalExpenses = await Expense.count({
@@ -58,7 +59,7 @@ const getAllExpenses = async (req, res) => {
       offset: offset,
       limit: limit,
     });
-    
+
     console.log(expenses);
     res.json({ expenses, totalExpenses });
   } catch (err) {

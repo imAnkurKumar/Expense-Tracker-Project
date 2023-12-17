@@ -46,10 +46,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   const fetchExpenses = async (page) => {
+    const perPage = getSelectedExpensesPerPage();
     token = localStorage.getItem("token");
     try {
       const response = await axios.get(
-        `http://localhost:3000/expense/getAllExpenses?page=${page}`,
+        `http://localhost:3000/expense/getAllExpenses?page=${page}&perPage=${perPage}`,
         { headers: { Authorization: token } }
       );
       const { expenses, totalExpenses } = response.data;
@@ -60,7 +61,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         expenseList.appendChild(expenseItem);
       });
 
-      totalPages = Math.ceil(totalExpenses / 5);
+      totalPages = Math.ceil(totalExpenses / perPage);
       currentPageDisplay.innerHTML = `Page ${page} of ${totalPages}`;
       prevPageBtn.disabled = page === 1;
       nextPageBtn.disabled = page === totalPages;
@@ -80,6 +81,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!token) {
       console.error("Token is missing");
     } else {
+      const storedPerPage = localStorage.getItem("expensesPerPage");
+      document.getElementById("expensesPerPage").value = storedPerPage || 5;
       await fetchExpenses(currentPage);
     }
   } catch (error) {
@@ -99,6 +102,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       fetchExpenses(currentPage);
     }
   });
+  document.getElementById("expensesPerPage").addEventListener("change", () => {
+    const selectedPerPage = getSelectedExpensesPerPage();
+    localStorage.setItem("expensesPerPage", selectedPerPage);
+    fetchExpenses(currentPage);
+  });
+
+  function getSelectedExpensesPerPage() {
+    const expensesPerPageSelect = document.getElementById("expensesPerPage");
+    const selectedPerPage = parseInt(expensesPerPageSelect.value, 5);
+    localStorage.setItem("expensesPerPage", selectedPerPage);
+    return selectedPerPage;
+  }
 
   expenseForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -131,7 +146,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     } catch (error) {
       console.error("Expense addition error:", error);
-      // Handle the error, e.g., show an error message to the user.
     }
   });
 
